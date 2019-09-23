@@ -14,7 +14,7 @@ public class Enigma {
         }
 
         switch(mode){
-            case "-x":
+            case "-e":
             case "-d":
                 loadCipher(mode, cipher, key);
                 System.out.println("Do you want to continue?[Y]");
