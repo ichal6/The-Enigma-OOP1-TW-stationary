@@ -1,10 +1,16 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 
 public class Enigma {
     public static void main(String[] args) {
         System.out.println("The Enigma");
-
+        homophonicCipher("szkielet","-e");
+/*
         String mode = args[0];
         String cipher = args[1];
         String key = "";
@@ -31,7 +37,7 @@ public class Enigma {
             default:
                 System.out.println("Option not supported. Try: -e | -d | -l");
         }
-
+*/
     }
 
     private static void listAvailableCiphers() {
@@ -65,6 +71,17 @@ public class Enigma {
         Scanner scanner = new Scanner(System.in);
         String text = scanner.nextLine();
         return text;
+    }
+
+    private static void homophonicCipher(String text, String mode)
+    {
+        
+        if(mode.equals("-e")){
+
+    }
+        else{
+            System.out.println(text);
+        }
     }
 
 }
