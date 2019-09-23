@@ -1,11 +1,12 @@
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
 public class Enigma {
     public static void main(String[] args) {
         System.out.println("The Enigma");
-
-        String mode = args[0];
+        simpleSubstitutionCipher("defend affer", "-e");
+       /* String mode = args[0];
         String cipher = args[1];
         String key = "";
 
@@ -31,11 +32,11 @@ public class Enigma {
             default:
                 System.out.println("Option not supported. Try: -e | -d | -l");
         }
-
+        */
     }
 
     private static void listAvailableCiphers() {
-        System.out.println("List of ciphers");
+        System.out.println("List of ciphers:");
         System.out.println("List of ciphers");
     }
 
@@ -65,6 +66,45 @@ public class Enigma {
         Scanner scanner = new Scanner(System.in);
         String text = scanner.nextLine();
         return text;
+    }
+
+    private static void simpleSubstitutionCipher(String text, String mode)
+    {
+        text = text.toUpperCase();
+        char[] textAsChar = text.toCharArray();
+        String alphabet = "ABCDEFGHIJKLMNOPRSTUVWXYZ";
+        char[] alphabetAsChar = alphabet.toCharArray();
+        String key = "DXSFZEHCVITPGAQLKJRUOWMYBN";
+        String returnText = "";
+        if(mode.equals("-e"))
+        {
+            
+            for(char letter: textAsChar)
+            {
+                int index = 0;
+                while(index < alphabet.length())
+                {
+                    if(letter == alphabetAsChar[index])
+                    {
+                        returnText += key.charAt(index);
+                        break;
+                    }
+                    index++;
+
+                    if(index == alphabet.length())
+                    {
+                        returnText += letter;
+                    }
+                
+                }
+                
+            }
+             System.out.println(returnText);   
+        }
+        else
+        {
+
+        }
     }
 
 }
