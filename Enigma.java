@@ -1,4 +1,5 @@
 import java.util.Arrays;
+import java.util.Scanner;
 
 public class Enigma {
     public static void main(String[] args) {
@@ -15,6 +16,7 @@ public class Enigma {
         switch(mode){
             case "-e":
                 System.out.println("Encipher mode");
+                chooseCipher(mode, cipher);
                 break;
             case "-d":
                 System.out.println("Decipher mode");
@@ -30,7 +32,29 @@ public class Enigma {
         System.out.println("List of ciphers");
     }
 
-    private static String testCipher(String text, String mode) {
-
+    private static void chooseCipher(String mode, String cipher) {
+        System.out.print("Please insert text: ");
+        String text = readUserInput();
+        switch(cipher){
+            case "atbash":
+                atbashCipher(text, mode);
+        }
     }
+
+    private static void atbashCipher(String text, String mode){
+        if(mode.equals("-e")){
+            System.out.println(text);
+        }
+        else{
+            System.out.println(text);
+        }
+        
+    }
+
+    private static String readUserInput(){
+        Scanner scanner = new Scanner(System.in);
+        String text = scanner.nextLine();
+        return text;
+    }
+
 }
