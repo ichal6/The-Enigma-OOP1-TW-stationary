@@ -7,7 +7,7 @@ public class Enigma {
 
         String mode = args[0];
         String cipher = args[1];
-        String key;
+        String key = "";
 
         if(args.length > 2) {
             key = args[2];
@@ -16,7 +16,14 @@ public class Enigma {
         switch(mode){
             case "-e":
             case "-d":
-                loadCipher(mode, cipher);
+                loadCipher(mode, cipher, key);
+                System.out.println("Do you want to continue?[Y]");
+                String answer = readUserInput();
+                answer = answer.toLowerCase();
+                if (answer.equals("y"))
+                {
+                    main(args);
+                }
                 break;
             case "-l":
                 listAvailableCiphers();
@@ -31,7 +38,7 @@ public class Enigma {
         System.out.println("List of ciphers");
     }
 
-    private static void loadCipher(String mode, String cipher) {
+    private static void loadCipher(String mode, String cipher, String key) {
         System.out.print("Please insert text: ");
         String text = readUserInput();
         switch(cipher){
