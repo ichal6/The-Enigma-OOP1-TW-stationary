@@ -14,7 +14,7 @@ public class Enigma {
         }
 
         switch(mode){
-            case "-z":
+            case "-e":
             case "-d":
                 loadCipher(mode, cipher, key);
                 System.out.println("Do you want to continue?[Y]");
@@ -35,6 +35,7 @@ public class Enigma {
     }
 
     private static void listAvailableCiphers() {
+        System.out.println("List of ciphers");
         System.out.println("List of ciphers");
     }
 
