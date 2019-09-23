@@ -5,8 +5,7 @@ import java.util.Scanner;
 public class Enigma {
     public static void main(String[] args) {
         System.out.println("The Enigma");
-        simpleSubstitutionCipher("defend affer", "-e");
-       /* String mode = args[0];
+        String mode = args[0];
         String cipher = args[1];
         String key = "";
 
@@ -32,7 +31,7 @@ public class Enigma {
             default:
                 System.out.println("Option not supported. Try: -e | -d | -l");
         }
-        */
+        
     }
 
     private static void listAvailableCiphers() {
@@ -46,6 +45,9 @@ public class Enigma {
         switch(cipher){
             case "atbash":
                 atbashCipher(text, mode);
+                break;
+            case "simplesub":
+                simpleSubstitutionCipher(text, mode);
                 break;
             default:
                 System.out.println("Cipher not supported");
@@ -75,6 +77,7 @@ public class Enigma {
         String alphabet = "ABCDEFGHIJKLMNOPRSTUVWXYZ";
         char[] alphabetAsChar = alphabet.toCharArray();
         String key = "DXSFZEHCVITPGAQLKJRUOWMYBN";
+        char[] keyAsChar = key.toCharArray();
         String returnText = "";
         if(mode.equals("-e"))
         {
@@ -103,7 +106,27 @@ public class Enigma {
         }
         else
         {
+            for(char letter: textAsChar)
+            {
+                int index = 0;
+                while(index < alphabet.length())
+                {
+                    if(letter == keyAsChar[index])
+                    {
+                        returnText += alphabet.charAt(index);
+                        break;
+                    }
+                    index++;
 
+                    if(index == alphabet.length())
+                    {
+                        returnText += letter;
+                    }
+                
+                }
+                
+            }
+             System.out.println(returnText);  
         }
     }
 
