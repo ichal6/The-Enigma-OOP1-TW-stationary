@@ -46,6 +46,9 @@ public class Enigma {
             case "atbash":
                 atbashCipher(text, mode);
                 break;
+            case "ADFGX":
+                adfgxCipher(text, mode);
+                break;
             default:
                 System.out.println("Cipher not supported");
         }
@@ -65,6 +68,15 @@ public class Enigma {
         Scanner scanner = new Scanner(System.in);
         String text = scanner.nextLine();
         return text;
+    }
+
+    private static void adfgxCipher(String text, String mode) {
+        if(mode.equals("-e")){
+            System.out.println(text);
+        }
+        else{
+            System.out.println(text);
+        }
     }
 
 }
