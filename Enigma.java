@@ -36,6 +36,7 @@ public class Enigma {
 
     private static void listAvailableCiphers() {
         System.out.println("List of ciphers");
+        System.out.println("List of ciphers");
     }
 
     private static void loadCipher(String mode, String cipher, String key) {
