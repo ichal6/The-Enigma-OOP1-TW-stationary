@@ -1,16 +1,17 @@
+package enigmapackage;
+
 public class SimpleSubstrationCipher {
     public static void main(String[] args) {
 
     }
 
-    public static void simpleSubstitutionCipher(String text, String mode)
+    public static void simpleSubstitutionCipher(String text, String mode, String key)
     {
+        //key = "DXSFZEHCVITPGAQLKJRUOWMYBN";
         text = text.toUpperCase();
         char[] textAsChar = text.toCharArray();
 
         String alphabet = "ABCDEFGHIJKLMNOPRSTUVWXYZ";
-
-        String key = "DXSFZEHCVITPGAQLKJRUOWMYBN";
 
         String returnText = "";
 
