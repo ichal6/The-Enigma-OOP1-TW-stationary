@@ -1,3 +1,4 @@
+package enigmapackage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
@@ -54,6 +55,9 @@ public class Enigma {
         switch(cipher){
             case "atbash":
                 atbashCipher(text, mode);
+                break;
+            case "ROT13":
+                Rot13.rot13(text, mode);
                 break;
             default:
                 System.out.println("Cipher not supported");
