@@ -2,8 +2,6 @@ package enigmapackage;
 
 import java.util.Scanner;
 
-import enigmapackage.HomophonicCipher;
-
 public class Enigma {
     public static void main(String[] args) {
         System.out.println("The Enigma");
