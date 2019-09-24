@@ -53,6 +53,9 @@ public class Enigma {
             case "ROT13":
                 Rot13.rot13(text, mode);
                 break;
+            case "CAESAR":
+                Caesar.load(text, mode, Integer.parseInt(key));
+                break;
             case "HOMOPHONIC":
                 HomophonicCipher.homophonicCipher(text, mode);
                 break;
