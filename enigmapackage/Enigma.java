@@ -57,8 +57,8 @@ public class Enigma {
         System.out.print("Please insert text: ");
         String text = readUserInput();
         switch(cipher){
-            case "atbash":
-                atbashCipher(text, mode);
+            case "ATBASH":
+                Atbash.atbashCipher(text, mode);
                 break;
             case "ROT13":
                 Rot13.rot13(text, mode);
