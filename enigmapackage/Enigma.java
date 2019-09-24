@@ -5,11 +5,19 @@ import java.util.Scanner;
 public class Enigma {
     public static void main(String[] args) {
         System.out.println("The Enigma");
+        String mode = "-e";
 
-        String mode = args[0];
-        String cipher = "";
-        String key = "";
+        try{
+            mode = args[0];
+        }
+        catch(ArrayIndexOutOfBoundsException e)
+        {
+            
+        }
         
+        String cipher = "HOMOPHONIC";
+        String key = "";
+
         if (args.length > 1)
         {
             cipher = args[1]; 
