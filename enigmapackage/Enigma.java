@@ -1,8 +1,12 @@
 import java.util.ArrayList;
 import java.util.List;
+package enigmapackage;
+
 import java.util.Arrays;
 import java.util.Scanner;
 import java.util.HashMap;
+
+import enigmapackage.HomophonicCipher;
 
 public class Enigma {
     public static void main(String[] args) {
@@ -51,6 +55,14 @@ public class Enigma {
                 break;
             case "ADFGX":
                 adfgxCipher(text, mode, key);
+            case "ROT13":
+                Rot13.rot13(text, mode);
+                break;
+            case "CAESAR":
+                Caesar.load(text, mode, Integer.parseInt(key));
+                break;
+            case "HOMOPHONIC":
+                HomophonicCipher.homophonicCipher(text, mode);
                 break;
             default:
                 System.out.println("Cipher not supported");
