@@ -1,15 +1,29 @@
-import java.util.Arrays;
+package enigmapackage;
+
 import java.util.Scanner;
 
 public class Enigma {
     public static void main(String[] args) {
         System.out.println("The Enigma");
+        String mode = "-e";
 
-        String mode = args[0];
-        String cipher = args[1];
+        try{
+            mode = args[0];
+        }
+        catch(ArrayIndexOutOfBoundsException e)
+        {
+            
+        }
+        
+        String cipher = "HOMOPHONIC";
         String key = "";
 
-        if(args.length > 2) {
+        if (args.length > 1)
+        {
+            cipher = args[1]; 
+        }
+        else if(args.length > 2) 
+        {
             key = args[2];
         }
 
@@ -45,6 +59,18 @@ public class Enigma {
         switch(cipher){
             case "atbash":
                 atbashCipher(text, mode);
+                break;
+            case "ROT13":
+                Rot13.rot13(text, mode);
+                break;
+            case "CAESAR":
+                Caesar.load(text, mode, Integer.parseInt(key));
+                break;
+            case "HOMOPHONIC":
+                HomophonicCipher.homophonicCipher(text, mode);
+                break;
+            case "SIMPLESUBSTRATION":
+                SimpleSubstrationCipher.simpleSubstitutionCipher(text, mode, key);
                 break;
             default:
                 System.out.println("Cipher not supported");
