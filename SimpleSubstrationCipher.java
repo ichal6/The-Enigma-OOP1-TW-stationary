@@ -1,7 +1,6 @@
 public class SimpleSubstrationCipher {
     public static void main(String[] args) {
-        simpleSubstitutionCipher("test", "-e");
-        simpleSubstitutionCipher("RZJR", "-d");
+
     }
 
     public static void simpleSubstitutionCipher(String text, String mode)
