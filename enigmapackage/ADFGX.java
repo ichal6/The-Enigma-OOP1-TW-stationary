@@ -6,8 +6,9 @@ import java.util.Map;
 import java.util.Arrays;
 
 public class ADFGX {
-    public static void adfgxCipher(String text, String mode) {
+    public static void adfgxCipher(String inputText, String mode, String key) {
         char[][] keySquare = {{'p', 'h', 'q', 'g', 'm'}, {'e', 'a', 'y', 'n', 'o'}, {'f', 'd', 'x', 'k', 'r'}, {'c', 'v', 's', 'z', 'w'}, {'b', 'u', 't', 'i', 'l'}};
+        String text = inputText.replaceAll(" ", "");
         
         String result = "";
         HashMap<Integer, Character> hashMap = new HashMap<>();
@@ -22,15 +23,29 @@ public class ADFGX {
                 result += getY(hashMap, keySquare, text.charAt(i));
                 result += getX(hashMap, keySquare, text.charAt(i));
             }
-            System.out.println(result);
-            // while (result.size() != 0){
-            //     char x = result.get(0);
-            //     result.remove(0);
-            //     char y = result.get(0);
-            //     char[] temp = {}
-            // }
-            
 
+            List<List<Character>> listOfLists = new ArrayList<List<Character>>();
+            for (int i = 0; i < key.length(); i++) {
+                listOfLists.add(new ArrayList<Character>());
+            }
+            for (int i = 0; i < result.length(); i++) {
+                int numberOflist = calculateListNumber(i, key.length());
+                listOfLists.get(numberOflist).add(result.charAt(i));
+            }
+
+            HashMap<Character, Integer> keyMap = new HashMap<>();
+            for(char ch: key.toCharArray()) {
+                keyMap.put(ch, key.indexOf(ch));
+            }
+
+            String sortedKey = sortString(key);
+            char[] sortedKeyArray = sortedKey.toCharArray();
+
+            String finalResult = "";
+            for (int i = 0; i < listOfLists.size(); i++) {
+                finalResult += getStringRepresentation(listOfLists.get(keyMap.get(sortedKeyArray[i])));
+            }
+            System.out.println(finalResult);
         }
         else{
             for (int i = 0; i < text.length(); i += 2) {
@@ -42,6 +57,27 @@ public class ADFGX {
             }
             System.out.println(result);
         }
+    }
+
+    public static String getStringRepresentation(List<Character> list) {
+        StringBuilder builder = new StringBuilder(list.size());
+        for(Character ch: list) {
+            builder.append(ch);
+        }
+        return builder.toString();
+    }
+
+    public static String sortString(String text) {
+        char[] temp = text.toCharArray();
+        Arrays.sort(temp);
+        return new String(temp);
+    }
+
+    public static int calculateListNumber(int characterIndex, int keyLenght) {
+        while(characterIndex >= keyLenght) {
+            characterIndex -= keyLenght;
+        }
+        return characterIndex;
     }
 
     public static <K, V> K getKey(Map<K, V> map, V value) {

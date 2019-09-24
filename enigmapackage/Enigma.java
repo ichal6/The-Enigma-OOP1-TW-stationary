@@ -53,7 +53,7 @@ public class Enigma {
                 atbashCipher(text, mode);
                 break;
             case "ADFGX":
-                ADFGX.adfgxCipher(text, mode);
+                ADFGX.adfgxCipher(text, mode, key);
                 break;
             case "ROT13":
                 Rot13.rot13(text, mode);
