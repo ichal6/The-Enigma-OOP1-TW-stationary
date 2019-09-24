@@ -7,10 +7,15 @@ public class Enigma {
         System.out.println("The Enigma");
 
         String mode = args[0];
-        String cipher = args[1];
+        String cipher = "";
         String key = "";
-
-        if(args.length > 2) {
+        
+        if (args.length > 1)
+        {
+            cipher = args[1]; 
+        }
+        else if(args.length > 2) 
+        {
             key = args[2];
         }
 
