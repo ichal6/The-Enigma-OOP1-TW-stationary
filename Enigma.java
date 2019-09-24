@@ -10,7 +10,9 @@ import java.util.Random;
 public class Enigma {
     public static void main(String[] args) {
         System.out.println("The Enigma");
-
+        homophonicCipher("ABCDEFGHIJKLMNOPQRSTUVWXYZ", "-e");
+        homophonicCipher("DXSF2EHCVITPGAQLKJRUOWMYBN", "-d");
+        /*
         String mode = args[0];
         String cipher = args[1];
         String key = "";
@@ -37,6 +39,7 @@ public class Enigma {
             default:
                 System.out.println("Option not supported. Try: -e | -d | -l");
         }
+        */
 
     }
 
@@ -80,17 +83,32 @@ public class Enigma {
 
         text = text.toUpperCase();
         char[] textAsChar = text.toCharArray();
-        String alphabet = "ABCDEFGHIJKLMNOPRSTUVWXYZ";
-        char[] alphabetAsChar = alphabet.toCharArray();
-        String[] keys = {"DXSFZEHCVITPGAQLKJRUOWMYBN", "9XSF7EHC3ITPG50LKJ46OWMYBN", "DXSF2EHCVITPGAQLKJRUOWMYBN", "DXSF1EHCVITPGAQLKJRUOWMYBN"};
+
+        String alphabet ="ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        String[] keys = {"DXSFZEHCVITPGAQLKJRUOWMYBN", "9XSF7EHC3ITPG50LKJ46OWMYBN",
+                         "DXSF2EHCVITPGAQLKJRUOWMYBN", "DXSF1EHCVITPGAQLKJRUOWMYBN"};
         String key = keys[randomKey];
-        char[] keyAsChar = key.toCharArray();
+
         String returnText = "";
-        System.out.println(randomKey);
+
         if(mode.equals("-e"))
         {
-            
-            for(char letter: textAsChar)
+            returnText = homophonicCipherEncipher(textAsChar, alphabet, key);
+            System.out.println(returnText);   
+        }
+        else
+        {
+            returnText = homophonicCipherDecipher(textAsChar, alphabet, keys);
+            System.out.println(returnText);  
+        }
+    }
+
+    static private String homophonicCipherEncipher(char[] textAsChar, String alphabet, String key)
+    {
+        char[] alphabetAsChar = alphabet.toCharArray();
+        String returnText = "";
+        for(char letter: textAsChar)
             {
                 int index = 0;
                 while(index < alphabet.length())
@@ -110,46 +128,44 @@ public class Enigma {
                 }
                 
             }
-            System.out.println(returnText);   
+        return returnText;
+    }
+
+    static private String homophonicCipherDecipher(char[] textAsChar, String alphabet, String[] keys)
+    {
+        String returnText = "";
+        int indexKeys = 0;
+        String key = keys[indexKeys];
+        char[] keyAsChar = key.toCharArray();
+        for(char letter: textAsChar)
+        {
+            int index = 0;
+            indexKeys = 0;
+            while(index < alphabet.length())
+            {
+                if(letter == keyAsChar[index])
+                {
+                    returnText += alphabet.charAt(index);
+                    indexKeys = 0;
+                    break;
+                }
+                index++;
+
+                if(indexKeys > 2)
+                {
+                    returnText += letter;
+                    break;
+                }
+
+                if(index == alphabet.length())
+                {
+                    key = keys[++indexKeys];
+                    keyAsChar = key.toCharArray();
+                    index = 0;
+                }
+            }
             
         }
-        else
-        {
-            int indexKeys = 0;
-            key = keys[indexKeys];
-            keyAsChar = key.toCharArray();
-            for(char letter: textAsChar)
-            {
-                int index = 0;
-                indexKeys = 0;
-                while(index < alphabet.length())
-                {
-                    if(letter == keyAsChar[index])
-                    {
-                        returnText += alphabet.charAt(index);
-                        indexKeys = 0;
-                        break;
-                    }
-                    index++;
-
-                    if(indexKeys > 2)
-                    {
-                        returnText += letter;
-                        break;
-                    }
-
-                    if(index == alphabet.length())
-                    {
-                        key = keys[++indexKeys];
-                        keyAsChar = key.toCharArray();
-                        index = 0;
-                    }
-                }
-                
-            }
-             System.out.println(returnText);  
-        }
-
-
+        return returnText;
     }
 }
