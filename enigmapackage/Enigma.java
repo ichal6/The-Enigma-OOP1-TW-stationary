@@ -1,6 +1,5 @@
 package enigmapackage;
 
-import java.util.Arrays;
 import java.util.Scanner;
 
 import enigmapackage.HomophonicCipher;
@@ -58,6 +57,9 @@ public class Enigma {
                 break;
             case "HOMOPHONIC":
                 HomophonicCipher.homophonicCipher(text, mode);
+                break;
+            case "SIMPLESUBSTRATION":
+                SimpleSubstrationCipher.simpleSubstitutionCipher(text, mode, key);
                 break;
             default:
                 System.out.println("Cipher not supported");
