@@ -1,12 +1,9 @@
+package enigmapackage;
 import java.util.Random;
 
 public class HomophonicCipher{
-    public static void main()
-    {
-        
-    }
 
-    private static void homophonicCipher(String text, String mode)
+    public static void homophonicCipher(String text, String mode)
     {
         Random rand = new Random();
         int randomKey = rand.nextInt(3);
