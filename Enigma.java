@@ -91,12 +91,12 @@ public class Enigma {
             }
             System.out.println(result);
             System.out.println(key);
-            while (result.size() != 0){
-                char x = result.get(0);
-                result.remove(0);
-                char y = result.get(0);
-                char[] temp = {}
-            }
+            // while (result.size() != 0){
+            //     char x = result.get(0);
+            //     result.remove(0);
+            //     char y = result.get(0);
+            //     char[] temp = {}
+            // }
             
 
         }
