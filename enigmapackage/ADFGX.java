@@ -59,22 +59,54 @@ public class ADFGX {
             }
             System.out.println(text);
             
-            int z = 0;
-            int numberOfRows = (int)Math.floor((double)(text.length()) / (double)(key.length()));
-            System.out.println(numberOfRows);
-            for (int i = 0, j = key.length(); i < text.length(); i += numberOfRows, j++) {
-                for (int k = 0; k < numberOfRows; k++, z++) {
-                    try{
-                    listOfLists.get(j-key.length()).add(text.charAt(z));
-                    } catch(Exception e){
-                        break;
+            //int z = 0;
+            int numberOfRowsMin = (int)Math.floor((double)(text.length()) / (double)(key.length()));
+            int numberOfRowsMax = (int)Math.ceil((double)(text.length()) / (double)(key.length()));
+
+            //System.out.println(numberOfRows);
+            // for (int i = 0, j = key.length(); i < text.length(); i += numberOfRows, j++) {
+            //     for (int k = 0; k < numberOfRows; k++, z++) {
+            //         try{
+            //         listOfLists.get(j-key.length()).add(text.charAt(z));
+            //         } catch(Exception e){
+            //             break;
+            //         }
+            //     }
+            // }
+            int amountOfFullLists = (text.length()) % (key.length());
+            System.out.println(amountOfFullLists);
+            System.out.println(numberOfRowsMax);
+            System.out.println(numberOfRowsMin);
+
+            
+            for (int i = 0; i < key.length(); i++, amountOfFullLists--) {
+                int z = 0;
+                if(amountOfFullLists != 0){
+                    for (int k = z; k < numberOfRowsMax-1; k++, numberOfRowsMax+=numberOfRowsMax) {
+                        try {
+                            listOfLists.get(i).add(text.charAt(k));                    
+                        } catch (Exception e){
+                            break;
+                        }
                     }
+                    z += numberOfRowsMax;
+                } else {
+                    for (int k = z; k < numberOfRowsMin-1; k++, numberOfRowsMin+=numberOfRowsMin) {
+                        try {
+                            listOfLists.get(i).add(text.charAt(k));                    
+                        } catch (Exception e){
+                            break;
+                        }               
+                        }
+                        z += numberOfRowsMin;
                 }
             }
-            int indexOfCharactersLeft = numberOfRows*key.length();
-            for (int i = 0, index = indexOfCharactersLeft; index < text.length(); i++, index++) {
-                listOfLists.get(i).add(text.charAt(index));
-            }
+            // int indexOfCharactersLeft = numberOfRows*key.length();
+            // for (int i = 0, index = indexOfCharactersLeft; index < text.length(); i++, index++) {
+            //     listOfLists.get(i).add(text.charAt(index));
+            // }
+
+
             System.out.print("List: ");
             System.out.println(listOfLists);
 
