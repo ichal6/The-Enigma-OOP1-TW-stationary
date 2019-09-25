@@ -22,7 +22,7 @@ public class Enigma {
         {
             cipher = args[1]; 
         }
-        else if(args.length > 2) 
+        if(args.length > 2) 
         {
             key = args[2];
         }
@@ -68,6 +68,9 @@ public class Enigma {
                 break;
             case "HOMOPHONIC":
                 HomophonicCipher.homophonicCipher(text, mode);
+                break;
+                case "VIGENERE":
+                Vigenere.vigenere(text, mode, key);
                 break;
             case "SIMPLESUBSTRATION":
                 SimpleSubstrationCipher.simpleSubstitutionCipher(text, mode, key);
