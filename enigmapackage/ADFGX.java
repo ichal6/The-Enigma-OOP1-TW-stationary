@@ -79,28 +79,37 @@ public class ADFGX {
             System.out.println(numberOfRowsMin);
 
             int z = 0;
-            int max = 1;
+            int max = 0;
             for (int i = 0; i < key.length(); i++, amountOfFullLists--) {
                 
                 if(amountOfFullLists > 0){
-                    for (int k = z; k < numberOfRowsMax-1; k++) {
+                    
+                    max += numberOfRowsMax;
+                    
+                    
+                    for (int k = z; k < max; k++, z = k) {
                         try {
                             listOfLists.get(i).add(text.charAt(k));                    
                         } catch (Exception e){
                             break;
                         }
+                        
                     }
-                    z += numberOfRowsMax;
+                    //z += numberOfRowsMax;
                 } else {
-                    for (int k = z; k <= max; k++) {
+                    
+                    max += numberOfRowsMin;
+                    
+                    
+                    for (int k = z; k < max; k++, z = k) {
                         try {
                             listOfLists.get(i).add(text.charAt(k));                    
                         } catch (Exception e){
                             break;
-                        }               
                         }
-                        z += numberOfRowsMin;
-                        max = max + numberOfRowsMin;
+                                    
+                        }
+                       // z += numberOfRowsMin;
                 }
             }
             // int indexOfCharactersLeft = numberOfRows*key.length();
@@ -125,13 +134,16 @@ public class ADFGX {
             String tempText = "";
             for (int i = 0; i < encryptedText.get(i).size(); i++) {
                 for (int k = 0; k < key.length(); k++) {
+
                     tempText += encryptedText.get(k).get(i);
+
                 }
             }
             System.out.println(tempText);
+            //tempText = "DDXFFXXDDDDD";
 
 
-            for (int i = 0; i < tempText.length(); i += 2) {
+            for (int i = 0; i + 1 < tempText.length(); i += 2) {
 
                 int y = getKey(hashMap, tempText.charAt(i));
                 int x = getKey(hashMap, tempText.charAt(i+1));
