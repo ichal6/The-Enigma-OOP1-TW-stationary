@@ -87,7 +87,7 @@ public class Enigma {
                 Baconian.BaconianCipher(text, mode);
                 break;
             case "ADFGX":
-                ADFGX.BaconianCipher(text, mode, key);
+                ADFGX.adfgxCipher(text, mode, key);
                 break;
             default:
                 System.out.println("Cipher not supported");
