@@ -11,9 +11,9 @@ public class Enigma {
     public static void main(String[] args) {
         System.out.println("The Enigma");
 
-        String mode = args[0];
-        String cipher = args[1];
-        String key = "";
+        String mode = "-d";
+        String cipher = "ADFGX";
+        String key = "GERMAN";
 
         if(args.length > 2) {
             key = args[2];

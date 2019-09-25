@@ -78,11 +78,12 @@ public class ADFGX {
             System.out.println(numberOfRowsMax);
             System.out.println(numberOfRowsMin);
 
-            
+            int z = 0;
+            int max = 1;
             for (int i = 0; i < key.length(); i++, amountOfFullLists--) {
-                int z = 0;
-                if(amountOfFullLists != 0){
-                    for (int k = z; k < numberOfRowsMax-1; k++, numberOfRowsMax+=numberOfRowsMax) {
+                
+                if(amountOfFullLists > 0){
+                    for (int k = z; k < numberOfRowsMax-1; k++) {
                         try {
                             listOfLists.get(i).add(text.charAt(k));                    
                         } catch (Exception e){
@@ -91,7 +92,7 @@ public class ADFGX {
                     }
                     z += numberOfRowsMax;
                 } else {
-                    for (int k = z; k < numberOfRowsMin-1; k++, numberOfRowsMin+=numberOfRowsMin) {
+                    for (int k = z; k <= max; k++) {
                         try {
                             listOfLists.get(i).add(text.charAt(k));                    
                         } catch (Exception e){
@@ -99,6 +100,7 @@ public class ADFGX {
                         }               
                         }
                         z += numberOfRowsMin;
+                        max = max + numberOfRowsMin;
                 }
             }
             // int indexOfCharactersLeft = numberOfRows*key.length();
