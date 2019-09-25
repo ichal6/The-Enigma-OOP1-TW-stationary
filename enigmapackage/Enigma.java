@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import enigmapackage.ADFGX;
+
 
 public class Enigma {
     public static void main(String[] args) {
@@ -52,7 +54,7 @@ public class Enigma {
     }
 
     private static void listAvailableCiphers() {
-        String[] ciphers = {"ATBASH", "ROT13", "CAESAR - digit key", "HOMOPHONIC", "VIGENERE - word key", "SIMPLESUBSTRATION", "BACONIAN"};
+        String[] ciphers = {"ATBASH", "ROT13", "CAESAR - digit key", "HOMOPHONIC", "VIGENERE - word key", "SIMPLESUBSTRATION", "BACONIAN", "ADFGX - word key"};
         System.out.println("List of supported ciphers:");
         for(String cipher: ciphers) {
             System.out.println(cipher);
@@ -65,9 +67,6 @@ public class Enigma {
         switch(cipher){
             case "ATBASH":
                 Atbash.atbashCipher(text, mode);
-                break;
-            case "ADFGX":
-                ADFGX.adfgxCipher(text, mode, key);
                 break;
             case "ROT13":
                 Rot13.rot13(text, mode);
@@ -86,6 +85,9 @@ public class Enigma {
                 break;
             case "BACONIAN":
                 Baconian.BaconianCipher(text, mode);
+                break;
+            case "ADFGX":
+                ADFGX.BaconianCipher(text, mode, key);
                 break;
             default:
                 System.out.println("Cipher not supported");
