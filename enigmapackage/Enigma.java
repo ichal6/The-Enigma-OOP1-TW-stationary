@@ -49,8 +49,11 @@ public class Enigma {
     }
 
     private static void listAvailableCiphers() {
-        System.out.println("List of ciphers");
-        System.out.println("List of ciphers");
+        String[] ciphers = {"ATBASH", "ROT13", "CAESAR - digit key", "HOMOPHONIC", "VIGENERE - word key", "SIMPLESUBSTRATION", "BACONIAN"};
+        System.out.println("List of supported ciphers:");
+        for(String cipher: ciphers) {
+            System.out.println(cipher);
+        }
     }
 
     private static void loadCipher(String mode, String cipher, String key) {
