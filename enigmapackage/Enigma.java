@@ -10,12 +10,25 @@ import enigmapackage.HomophonicCipher;
 public class Enigma {
     public static void main(String[] args) {
         System.out.println("The Enigma");
+        String mode = "-e";
 
-        String mode = "-d";
-        String cipher = "ADFGX";
-        String key = "GERMAN";
+        try{
+            mode = args[0];
+        }
+        catch(ArrayIndexOutOfBoundsException e)
+        {
+            
+        }
+        
+        String cipher = "HOMOPHONIC";
+        String key = "";
 
-        if(args.length > 2) {
+        if (args.length > 1)
+        {
+            cipher = args[1]; 
+        }
+        if(args.length > 2) 
+        {
             key = args[2];
         }
 
