@@ -52,16 +52,58 @@ public class ADFGX {
         }
         else{
             // Decrypt
-            char[] unsortedKeyArray = key.toCharArray();
-            HashMap<Character, Integer> unsortedKeyMap = new HashMap<>();
-            for(char ch: sortedKey.toCharArray()) {
-                unsortedKeyMap.put(ch, sortedKey.indexOf(ch));
-            }
-            System.out.println(text);
-            
-            //int z = 0;
             int numberOfRowsMin = (int)Math.floor((double)(text.length()) / (double)(key.length()));
             int numberOfRowsMax = (int)Math.ceil((double)(text.length()) / (double)(key.length()));
+            int amountOfFullLists = (text.length()) % (key.length());
+            int amountOfSmallerLists = key.length() - amountOfFullLists;
+            System.out.println("Amount of smaller lits: " + amountOfSmallerLists);
+
+
+            
+            char[] keyAsArray = key.toCharArray();
+            HashMap<Character, Integer> sortedKeyMap = new HashMap<>();
+            for(char ch: sortedKey.toCharArray()) {
+                sortedKeyMap.put(ch, sortedKey.indexOf(ch));
+            }
+            HashMap<Character, Integer> columnLenghtMap = new HashMap<>();
+            for(char ch: key.toCharArray()) {
+                System.out.println("Index of character in key: " + key.indexOf(ch));
+                System.out.println("Index of last Max list: " + (key.length() - amountOfSmallerLists));
+                if(key.indexOf(ch) >= (key.length() - amountOfSmallerLists)) {
+                    System.out.println("Adding Min to dict");
+                    columnLenghtMap.put(ch, numberOfRowsMin);
+                } else {
+                    System.out.println("Adding Max to dict");
+                    columnLenghtMap.put(ch, numberOfRowsMax);
+                }
+            }
+            System.out.println(text);
+
+            int z = 0;
+            int characterNumber = 0;
+            for(List<Character> list: listOfLists) {
+                if (columnLenghtMap.get(sortedKey.charAt(z)) == numberOfRowsMin){
+                    System.out.println("Character in Key:" + sortedKey.charAt(z));
+                    System.out.println("This array is size:" + numberOfRowsMin);
+                    for (int j = 0; j < numberOfRowsMin; j++, characterNumber++) {
+                        list.add(text.charAt(characterNumber));
+                    }
+                } else {
+                    System.out.println("Character in Key:" + sortedKey.charAt(z));
+                    System.out.println("This array is size:" + numberOfRowsMax);
+                    for (int j = 0; j < numberOfRowsMax; j++, characterNumber++) {
+                        list.add(text.charAt(characterNumber));
+                    }
+                }
+                z++;
+            }
+            System.out.println(amountOfFullLists);
+            System.out.println(numberOfRowsMax);
+            System.out.println(numberOfRowsMin);
+            System.out.print("List: ");
+            System.out.println(listOfLists);
+            //int z = 0;
+
 
             //System.out.println(numberOfRows);
             // for (int i = 0, j = key.length(); i < text.length(); i += numberOfRows, j++) {
@@ -73,75 +115,82 @@ public class ADFGX {
             //         }
             //     }
             // }
-            int amountOfFullLists = (text.length()) % (key.length());
-            System.out.println(amountOfFullLists);
-            System.out.println(numberOfRowsMax);
-            System.out.println(numberOfRowsMin);
 
-            int z = 0;
-            int max = 0;
-            for (int i = 0; i < key.length(); i++, amountOfFullLists--) {
+
+
+            // int z = 0;
+            // int max = 0;
+            // for (int i = 0; i < key.length(); i++, amountOfFullLists--) {
                 
-                if(amountOfFullLists > 0){
+            //     if(amountOfFullLists > 0){
                     
-                    max += numberOfRowsMax;
+            //         max += numberOfRowsMax;
                     
                     
-                    for (int k = z; k < max; k++, z = k) {
-                        try {
-                            listOfLists.get(i).add(text.charAt(k));                    
-                        } catch (Exception e){
-                            break;
-                        }
+            //         for (int k = z; k < max; k++, z = k) {
+            //             try {
+            //                 listOfLists.get(i).add(text.charAt(k));                    
+            //             } catch (Exception e){
+            //                 break;
+            //             }
                         
-                    }
-                    //z += numberOfRowsMax;
-                } else {
+            //         }
+            //         //z += numberOfRowsMax;
+            //     } else {
                     
-                    max += numberOfRowsMin;
+            //         max += numberOfRowsMin;
                     
                     
-                    for (int k = z; k < max; k++, z = k) {
-                        try {
-                            listOfLists.get(i).add(text.charAt(k));                    
-                        } catch (Exception e){
-                            break;
-                        }
+            //         for (int k = z; k < max; k++, z = k) {
+            //             try {
+            //                 listOfLists.get(i).add(text.charAt(k));                    
+            //             } catch (Exception e){
+            //                 break;
+            //             }
                                     
-                        }
-                       // z += numberOfRowsMin;
-                }
-            }
+            //             }
+            //            // z += numberOfRowsMin;
+            //     }
+            // }
             // int indexOfCharactersLeft = numberOfRows*key.length();
             // for (int i = 0, index = indexOfCharactersLeft; index < text.length(); i++, index++) {
             //     listOfLists.get(i).add(text.charAt(index));
             // }
 
 
-            System.out.print("List: ");
-            System.out.println(listOfLists);
+
 
 
             //String encryptedText = "";
             List<List<Character>> encryptedText = new ArrayList<List<Character>>();
             for (int i = 0; i < listOfLists.size(); i++) {
-                System.out.println(unsortedKeyMap.get(unsortedKeyArray[i]));     
-                encryptedText.add(listOfLists.get(unsortedKeyMap.get(unsortedKeyArray[i])));
+                System.out.println(sortedKeyMap.get(keyAsArray[i]));     
+                encryptedText.add(listOfLists.get(sortedKeyMap.get(keyAsArray[i])));
             }
-            System.out.println(unsortedKeyArray);        
+            System.out.println(keyAsArray);        
             System.out.println(encryptedText);
 
             String tempText = "";
-            for (int i = 0; i < encryptedText.get(i).size(); i++) {
-                for (int k = 0; k < key.length(); k++) {
+            // for (int i = 0; i < encryptedText.get(i).size(); i++) {
+            //     for (int k = 0; k < key.length(); k++) {
+            //         try {
+            //             tempText += encryptedText.get(k).get(i);                   
+            //         } catch (Exception e){
+            //             continue;
+            //         }
 
-                    tempText += encryptedText.get(k).get(i);
-
+            //     }
+            // }
+            for (int characterToBeAdded = 0; characterToBeAdded < numberOfRowsMax; characterToBeAdded++) {
+                for(List<Character> listEncrypted: encryptedText){
+                    try{
+                        tempText += listEncrypted.get(characterToBeAdded);
+                    } catch (Exception e){
+                        continue;
+                    }
                 }
             }
             System.out.println(tempText);
-            //tempText = "DDXFFXXDDDDD";
-
 
             for (int i = 0; i + 1 < tempText.length(); i += 2) {
 
