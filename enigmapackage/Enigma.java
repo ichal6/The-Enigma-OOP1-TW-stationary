@@ -1,6 +1,9 @@
 package enigmapackage;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
 import java.util.Scanner;
+
 
 public class Enigma {
     public static void main(String[] args) {
@@ -63,6 +66,9 @@ public class Enigma {
             case "ATBASH":
                 Atbash.atbashCipher(text, mode);
                 break;
+            case "ADFGX":
+                ADFGX.adfgxCipher(text, mode, key);
+                break;
             case "ROT13":
                 Rot13.rot13(text, mode);
                 break;
@@ -91,5 +97,4 @@ public class Enigma {
         String text = scanner.nextLine();
         return text;
     }
-
 }
