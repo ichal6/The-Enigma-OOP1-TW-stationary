@@ -3,6 +3,7 @@ import java.util.HashMap;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.SortedMap;
 import java.util.Arrays;
 
 public class ADFGX {
@@ -57,6 +58,12 @@ public class ADFGX {
             for(char ch: sortedKey.toCharArray()) {
                 unsortedKeyMap.put(ch, sortedKey.indexOf(ch));
             }
+
+
+            HashMap<Character, Integer> realUnSortedKeyMap = new HashMap<>();
+            for(char ch: sortedKey.toCharArray()) {
+                realUnSortedKeyMap.put(ch, key.indexOf(ch));
+            }
             System.out.println(text);
             
             //int z = 0;
@@ -78,39 +85,45 @@ public class ADFGX {
             System.out.println(numberOfRowsMax);
             System.out.println(numberOfRowsMin);
 
+            
             int z = 0;
-            int max = 0;
-            for (int i = 0; i < key.length(); i++, amountOfFullLists--) {
-                
-                if(amountOfFullLists > 0){
+            int k = 0;    
+            for (int i = 0; i < key.length(); i++) {
                     
-                    max += numberOfRowsMax;
-                    
-                    
-                    for (int k = z; k < max; k++, z = k) {
+                k = i;
+                    for (int jump = 0; jump < numberOfRowsMin;z++ ) {
                         try {
                             listOfLists.get(i).add(text.charAt(k));                    
                         } catch (Exception e){
                             break;
                         }
-                        
-                    }
-                    //z += numberOfRowsMax;
-                } else {
-                    
-                    max += numberOfRowsMin;
-                    
-                    
-                    for (int k = z; k < max; k++, z = k) {
-                        try {
-                            listOfLists.get(i).add(text.charAt(k));                    
-                        } catch (Exception e){
-                            break;
-                        }
-                                    
+                        k = k + key.length();
+                        jump++;           
                         }
                        // z += numberOfRowsMin;
+                 
                 }
+                   
+                if ((text.length() % key.length()) != 0) 
+                {
+                    int indexSortedKey = 0;
+                    int lastCharIndex = z;
+                    
+                    for(; amountOfFullLists > 0; )
+                    {   
+                        int indexUnSortedArray = realUnSortedKeyMap.get(sortedKey.charAt(indexSortedKey));
+                        if(indexUnSortedArray < amountOfFullLists)
+                        {
+                            char indexSortedArray = key.charAt(indexUnSortedArray);
+                            int indexRewriteElement = unsortedKeyMap.get(indexSortedArray);
+                            listOfLists.get(indexRewriteElement).add(text.charAt(lastCharIndex));
+                            amountOfFullLists--;
+                            lastCharIndex++;
+                        }
+                        indexSortedKey++;
+ 
+                    }
+                    
             }
             // int indexOfCharactersLeft = numberOfRows*key.length();
             // for (int i = 0, index = indexOfCharactersLeft; index < text.length(); i++, index++) {
@@ -133,7 +146,7 @@ public class ADFGX {
 
             String tempText = "";
             for (int i = 0; i < encryptedText.get(i).size(); i++) {
-                for (int k = 0; k < key.length(); k++) {
+                for (k = 0; k < key.length(); k++) {
 
                     tempText += encryptedText.get(k).get(i);
 
