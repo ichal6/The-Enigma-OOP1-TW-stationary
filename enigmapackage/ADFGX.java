@@ -58,12 +58,24 @@ public class ADFGX {
                 unsortedKeyMap.put(ch, sortedKey.indexOf(ch));
             }
             System.out.println(text);
-            int j = 0;
-            for (int i = 0; i < text.length(); i += 2) {   
-                listOfLists.get(j).add(text.charAt(i));
-                listOfLists.get(j).add(text.charAt(i+1));
-                j += 1;
+            
+            int z = 0;
+            int numberOfRows = (int)Math.floor((double)(text.length()) / (double)(key.length()));
+            System.out.println(numberOfRows);
+            for (int i = 0, j = key.length(); i < text.length(); i += numberOfRows, j++) {
+                for (int k = 0; k < numberOfRows; k++, z++) {
+                    try{
+                    listOfLists.get(j-key.length()).add(text.charAt(z));
+                    } catch(Exception e){
+                        break;
+                    }
+                }
             }
+            int indexOfCharactersLeft = numberOfRows*key.length();
+            for (int i = 0, index = indexOfCharactersLeft; index < text.length(); i++, index++) {
+                listOfLists.get(i).add(text.charAt(index));
+            }
+            System.out.print("List: ");
             System.out.println(listOfLists);
 
 
@@ -111,13 +123,6 @@ public class ADFGX {
     }
 
     public static int calculateListNumber(int characterIndex, int keyLenght) {
-        while(characterIndex >= keyLenght) {
-            characterIndex -= keyLenght;
-        }
-        return characterIndex;
-    }
-
-    public static int calculateDecodeListNumber(int characterIndex, int keyLenght) {
         while(characterIndex >= keyLenght) {
             characterIndex -= keyLenght;
         }
