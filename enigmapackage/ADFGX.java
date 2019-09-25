@@ -18,28 +18,31 @@ public class ADFGX {
         hashMap.put(3, 'G');
         hashMap.put(4, 'X');
 
-        if(mode.equals("-e")){
-            for (int i = 0; i < text.length(); i++) {
-                result += getY(hashMap, keySquare, text.charAt(i));
-                result += getX(hashMap, keySquare, text.charAt(i));
-            }
+        List<List<Character>> listOfLists = new ArrayList<List<Character>>();
+        for (int i = 0; i < key.length(); i++) {
+            listOfLists.add(new ArrayList<Character>());
+        }
 
-            List<List<Character>> listOfLists = new ArrayList<List<Character>>();
-            for (int i = 0; i < key.length(); i++) {
-                listOfLists.add(new ArrayList<Character>());
-            }
-            for (int i = 0; i < result.length(); i++) {
-                int numberOflist = calculateListNumber(i, key.length());
-                listOfLists.get(numberOflist).add(result.charAt(i));
-            }
+        String sortedKey = sortString(key);
+
+        if(mode.equals("-e")){
+            // Encrypt
+            char[] sortedKeyArray = sortedKey.toCharArray();
 
             HashMap<Character, Integer> keyMap = new HashMap<>();
             for(char ch: key.toCharArray()) {
                 keyMap.put(ch, key.indexOf(ch));
             }
 
-            String sortedKey = sortString(key);
-            char[] sortedKeyArray = sortedKey.toCharArray();
+            for (int i = 0; i < text.length(); i++) {
+                result += getY(hashMap, keySquare, text.charAt(i));
+                result += getX(hashMap, keySquare, text.charAt(i));
+            }
+
+            for (int i = 0; i < result.length(); i++) {
+                int numberOflist = calculateListNumber(i, key.length());
+                listOfLists.get(numberOflist).add(result.charAt(i));
+            }
 
             String finalResult = "";
             for (int i = 0; i < listOfLists.size(); i++) {
@@ -48,10 +51,44 @@ public class ADFGX {
             System.out.println(finalResult);
         }
         else{
-            for (int i = 0; i < text.length(); i += 2) {
+            // Decrypt
+            char[] unsortedKeyArray = key.toCharArray();
+            HashMap<Character, Integer> unsortedKeyMap = new HashMap<>();
+            for(char ch: sortedKey.toCharArray()) {
+                unsortedKeyMap.put(ch, sortedKey.indexOf(ch));
+            }
+            System.out.println(text);
+            int j = 0;
+            for (int i = 0; i < text.length(); i += 2) {   
+                listOfLists.get(j).add(text.charAt(i));
+                listOfLists.get(j).add(text.charAt(i+1));
+                j += 1;
+            }
+            System.out.println(listOfLists);
 
-                int y = getKey(hashMap, text.charAt(i));
-                int x = getKey(hashMap, text.charAt(i+1));
+
+            //String encryptedText = "";
+            List<List<Character>> encryptedText = new ArrayList<List<Character>>();
+            for (int i = 0; i < listOfLists.size(); i++) {
+                System.out.println(unsortedKeyMap.get(unsortedKeyArray[i]));     
+                encryptedText.add(listOfLists.get(unsortedKeyMap.get(unsortedKeyArray[i])));
+            }
+            System.out.println(unsortedKeyArray);        
+            System.out.println(encryptedText);
+
+            String tempText = "";
+            for (int i = 0; i < encryptedText.get(i).size(); i++) {
+                for (int k = 0; k < key.length(); k++) {
+                    tempText += encryptedText.get(k).get(i);
+                }
+            }
+            System.out.println(tempText);
+
+
+            for (int i = 0; i < tempText.length(); i += 2) {
+
+                int y = getKey(hashMap, tempText.charAt(i));
+                int x = getKey(hashMap, tempText.charAt(i+1));
 
                 result += keySquare[y][x];
             }
@@ -74,6 +111,13 @@ public class ADFGX {
     }
 
     public static int calculateListNumber(int characterIndex, int keyLenght) {
+        while(characterIndex >= keyLenght) {
+            characterIndex -= keyLenght;
+        }
+        return characterIndex;
+    }
+
+    public static int calculateDecodeListNumber(int characterIndex, int keyLenght) {
         while(characterIndex >= keyLenght) {
             characterIndex -= keyLenght;
         }
