@@ -75,6 +75,9 @@ public class Enigma {
             case "SIMPLESUBSTRATION":
                 SimpleSubstrationCipher.simpleSubstitutionCipher(text, mode, key);
                 break;
+            case "BACONIAN":
+                Baconian.BaconianCipher(text, mode);
+                break;
             default:
                 System.out.println("Cipher not supported");
         }
