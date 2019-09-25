@@ -69,7 +69,7 @@ public class Enigma {
             case "HOMOPHONIC":
                 HomophonicCipher.homophonicCipher(text, mode);
                 break;
-                case "VIGENERE":
+            case "VIGENERE":
                 Vigenere.vigenere(text, mode, key);
                 break;
             case "SIMPLESUBSTRATION":
