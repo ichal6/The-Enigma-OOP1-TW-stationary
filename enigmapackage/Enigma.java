@@ -5,8 +5,6 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 
-import enigmapackage.HomophonicCipher;
-
 public class Enigma {
     public static void main(String[] args) {
         System.out.println("The Enigma");
@@ -54,16 +52,19 @@ public class Enigma {
     }
 
     private static void listAvailableCiphers() {
-        System.out.println("List of ciphers");
-        System.out.println("List of ciphers");
+        String[] ciphers = {"ATBASH", "ROT13", "CAESAR - digit key", "HOMOPHONIC", "VIGENERE - word key", "SIMPLESUBSTRATION", "BACONIAN"};
+        System.out.println("List of supported ciphers:");
+        for(String cipher: ciphers) {
+            System.out.println(cipher);
+        }
     }
 
     private static void loadCipher(String mode, String cipher, String key) {
         System.out.print("Please insert text: ");
         String text = readUserInput();
         switch(cipher){
-            case "atbash":
-                atbashCipher(text, mode);
+            case "ATBASH":
+                Atbash.atbashCipher(text, mode);
                 break;
             case "ADFGX":
                 ADFGX.adfgxCipher(text, mode, key);
@@ -77,19 +78,18 @@ public class Enigma {
             case "HOMOPHONIC":
                 HomophonicCipher.homophonicCipher(text, mode);
                 break;
+            case "VIGENERE":
+                Vigenere.vigenere(text, mode, key);
+                break;
+            case "SIMPLESUBSTRATION":
+                SimpleSubstrationCipher.simpleSubstitutionCipher(text, mode, key);
+                break;
+            case "BACONIAN":
+                Baconian.BaconianCipher(text, mode);
+                break;
             default:
                 System.out.println("Cipher not supported");
         }
-    }
-
-    private static void atbashCipher(String text, String mode){
-        if(mode.equals("-e")){
-            System.out.println(text);
-        }
-        else{
-            System.out.println(text);
-        }
-        
     }
 
     private static String readUserInput(){

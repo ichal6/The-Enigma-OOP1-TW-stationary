@@ -4,14 +4,6 @@
             "type": "java",
             "name": "CodeLens (Launch) - Enigma",
             "request": "launch",
-            "mainClass": "enigmapackage.Enigma",
-            "projectName": "the-enigma-wojtekvictoriamichal_4e5eb755",
-            "args": ""
-        },
-        {
-            "type": "java",
-            "name": "CodeLens (Launch) - Enigma",
-            "request": "launch",
             "mainClass": "Enigma"
         }
     ]
