@@ -37,6 +37,7 @@ public class ADFGX {
         String sortedKey = sortString(key);        
         char[] sortedKeyArray = sortedKey.toCharArray();        
         String result = "";
+        text = text.toLowerCase();
         HashMap<Character, Integer> keyMap = new HashMap<>();
         for(char ch: key.toCharArray()) {
             keyMap.put(ch, key.indexOf(ch));
@@ -61,11 +62,13 @@ public class ADFGX {
 
 
     private static String decrypt(String text, String key, HashMap<Integer, Character> hashMap, char[][] keySquare, List<List<Character>> listOfLists) {
+        text = text.toUpperCase();
         int numberOfRowsMin = (int)Math.floor((double)(text.length()) / (double)(key.length()));
         int numberOfRowsMax = (int)Math.ceil((double)(text.length()) / (double)(key.length()));
         int amountOfFullLists = (text.length()) % (key.length());
         int amountOfSmallerLists = key.length() - amountOfFullLists;
         String result = "";
+        
         
         char[] keyAsArray = key.toCharArray();
         String sortedKey = sortString(key);        
