@@ -18,14 +18,9 @@ public class Playfair {
                 cipherKey += abc.charAt(i);
             }
         }
+        System.out.println(cipherKey);
         // creating table 5x5
-        int counter = 0;
-        for (int row = 0; row < 5; row++) {
-            for (int cell = 0; cell < 5; cell++) {
-                cipherTable[row][cell] = Character.toString(cipherKey.charAt(counter));
-                counter++;
-            }
-        }
+        generateCipherMatrix(cipherTable, cipherKey);
         // removing punctuation and empty chars
         for (int i = 0; i < charsToRemove.length(); i++) {
             if (text.contains((Character.toString(charsToRemove.charAt(i))))) {
@@ -35,14 +30,13 @@ public class Playfair {
 
         // replacing second double char with 'x'
         int length = (int) text.length() / 2 + text.length() % 2;
-        for (int i = 0; i < (length - 1); i++) {
-            if (text.charAt(2 * i) == text.charAt(2 * i + 1)) {
-                int secondDoubleIndex = text.indexOf(text.charAt(2 * i + 1)) + 1;
+        for (int i = 0; i < (length); i++) {
+            if (text.charAt(i) == text.charAt(i + 1)) {
+                int secondDoubleIndex = text.indexOf(text.charAt(i + 1)) + 1;
                 char[] textChars = text.toCharArray();
                 String temporaryCharReplacer = "X";
                 char charReplacer = temporaryCharReplacer.charAt(0);
                 textChars[secondDoubleIndex] = charReplacer;
-                length = (int) text.length() / 2 + text.length() % 2;
                 text = new String(textChars);
             }
         }
@@ -54,16 +48,18 @@ public class Playfair {
 
         // dividing into pairs
         String[] textPairs = new String[text.length() / 2];
-        counter = 0;
-        for (int i = 0; i < text.length() / 2; i++) {
+        
+        for (int i = 0, counter = 0; i < text.length() / 2; i++, counter += 2) {
             textPairs[i] = text.substring(counter, counter + 2);
-            counter = counter + 2;
         }
 
         // main algorythm
         for (int i = 0; i < textPairs.length; i++) {
             String char1 = String.valueOf(textPairs[i].charAt(0));
             String char2 = String.valueOf(textPairs[i].charAt(1));
+            System.out.println("Char1: " + char1);
+            System.out.println("Char2: " + char2);
+
             
             for (int rowIndex = 0; rowIndex < 5; rowIndex++) {
                 int char1Index = Arrays.asList(cipherTable[rowIndex]).indexOf(char1);
@@ -96,6 +92,14 @@ public class Playfair {
             System.out.println(Arrays.deepToString(cipherTable));
             System.out.println(Arrays.deepToString(textPairs));
             System.out.println(outPutText);
+        }
+    }
+
+    private static void generateCipherMatrix(String[][] cipherTable, String cipherKey) {
+        for (int row = 0, counter = 0; row < 5; row++) {
+            for (int cell = 0; cell < 5; cell++, counter++) {
+                cipherTable[row][cell] = Character.toString(cipherKey.charAt(counter));
+            }
         }
     }
 }
