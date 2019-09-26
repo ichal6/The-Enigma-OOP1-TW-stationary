@@ -10,6 +10,7 @@ public class ADFGX {
         char[][] keySquare = {{'p', 'h', 'q', 'g', 'm'}, {'e', 'a', 'y', 'n', 'o'}, {'f', 'd', 'x', 'k', 'r'}, {'c', 'v', 's', 'z', 'w'}, {'b', 'u', 't', 'i', 'l'}};
         String text = inputText.replaceAll(" ", "");
         
+        
         String result = "";
         HashMap<Integer, Character> hashMap = new HashMap<>();
         hashMap.put(0, 'A');
@@ -27,6 +28,7 @@ public class ADFGX {
 
         if(mode.equals("-e")){
             // Encrypt
+            text = text.toLowerCase();
             char[] sortedKeyArray = sortedKey.toCharArray();
 
             HashMap<Character, Integer> keyMap = new HashMap<>();
@@ -52,6 +54,7 @@ public class ADFGX {
         }
         else{
             // Decrypt
+            text = text.toUpperCase();
             int numberOfRowsMin = (int)Math.floor((double)(text.length()) / (double)(key.length()));
             int numberOfRowsMax = (int)Math.ceil((double)(text.length()) / (double)(key.length()));
             int amountOfFullLists = (text.length()) % (key.length());
