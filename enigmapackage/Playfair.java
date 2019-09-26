@@ -8,7 +8,7 @@ public class Playfair {
         String abc = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
         String outPutText = "";
         String cipherKey = "MONARCHY"; // key may be default or not
-        text = text.toUpperCase();
+        text = text.replaceAll("j","i").toUpperCase();
         int abcLength = abc.length();
         String charsToRemove = "., !:;?";
         String[][] cipherTable = new String[5][5];
@@ -18,7 +18,6 @@ public class Playfair {
                 cipherKey += abc.charAt(i);
             }
         }
-        System.out.println(cipherKey);
         // creating table 5x5
         generateCipherMatrix(cipherTable, cipherKey);
         // removing punctuation and empty chars
@@ -28,71 +27,24 @@ public class Playfair {
             }
         }
 
-        // replacing second double char with 'x'
-        int length = (int) text.length() / 2 + text.length() % 2;
-        for (int i = 0; i < (length); i++) {
-            if (text.charAt(i) == text.charAt(i + 1)) {
-                int secondDoubleIndex = text.indexOf(text.charAt(i + 1)) + 1;
-                char[] textChars = text.toCharArray();
-                String temporaryCharReplacer = "X";
-                char charReplacer = temporaryCharReplacer.charAt(0);
-                textChars[secondDoubleIndex] = charReplacer;
-                text = new String(textChars);
-            }
-        }
-
         // adding 'x' at the end if needed
         if (text.length() % 2 != 0) {
             text += "X";
         }
 
         // dividing into pairs
-        String[] textPairs = new String[text.length() / 2];
-        
-        for (int i = 0, counter = 0; i < text.length() / 2; i++, counter += 2) {
-            textPairs[i] = text.substring(counter, counter + 2);
+        String[] textPairs = splitTextIntoPairs(text);
+
+        // replacing second double char with 'x'
+        for(String pair: textPairs) {
+            if(pair.charAt(0) == pair.charAt(1)){
+                String newPair = "" + pair.charAt(0) + 'X';
+                textPairs[Arrays.asList(textPairs).indexOf(pair)] = newPair;
+            }
         }
 
         // main algorythm
-        for (int i = 0; i < textPairs.length; i++) {
-            String char1 = String.valueOf(textPairs[i].charAt(0));
-            String char2 = String.valueOf(textPairs[i].charAt(1));
-            System.out.println("Char1: " + char1);
-            System.out.println("Char2: " + char2);
-
-            
-            for (int rowIndex = 0; rowIndex < 5; rowIndex++) {
-                int char1Index = Arrays.asList(cipherTable[rowIndex]).indexOf(char1);
-                int char2Index = Arrays.asList(cipherTable[rowIndex]).indexOf(char2);
-                if (Arrays.asList(cipherTable[rowIndex]).contains(char1) && Arrays.asList(cipherTable[rowIndex]).contains(char2)) {
-                    if (char1Index+1 < 5 && char2Index+1 < 5) {
-                        outPutText += cipherTable[rowIndex][char1Index+1];
-                        outPutText += cipherTable[rowIndex][char2Index+1];
-                    } else if (char1Index+1 < 5 && char2Index+1 > 5) {
-                        outPutText += cipherTable[rowIndex][char1Index]+1;
-                        outPutText += cipherTable[rowIndex][0];
-                    } else if (char1Index+1 > 5 && char2Index+1 < 5) {
-                        outPutText += cipherTable[rowIndex][0];
-                        outPutText += cipherTable[rowIndex][char2Index+1];
-                    }
-                } else if (Arrays.asList(cipherTable[rowIndex]).indexOf(char1) == Arrays.asList(cipherTable[rowIndex]).indexOf(char1) && Arrays.asList(cipherTable[rowIndex]).indexOf(char1) >= 0) {
-                    if (rowIndex+1 < 4) {
-                        outPutText += cipherTable[rowIndex+1][char1Index];
-                        outPutText += cipherTable[rowIndex+2][char1Index];
-                    } else if (rowIndex+1 >= 4) {
-                        outPutText += cipherTable[rowIndex+1][char1Index];
-                        outPutText += cipherTable[0][char1Index];
-                    }
-                } else {
-                    System.out.println(char1Index);
-                    System.out.println(char2Index);
-                }
-            }
-
-            System.out.println(Arrays.deepToString(cipherTable));
-            System.out.println(Arrays.deepToString(textPairs));
-            System.out.println(outPutText);
-        }
+        encode(textPairs, cipherTable);
     }
 
     private static void generateCipherMatrix(String[][] cipherTable, String cipherKey) {
@@ -100,6 +52,93 @@ public class Playfair {
             for (int cell = 0; cell < 5; cell++, counter++) {
                 cipherTable[row][cell] = Character.toString(cipherKey.charAt(counter));
             }
+        }
+    }
+
+    private static String[] splitTextIntoPairs(String text) {
+        String[] textPairs = new String[text.length() / 2];
+        
+        for (int i = 0, counter = 0; i < text.length() / 2; i++, counter += 2) {
+            textPairs[i] = text.substring(counter, counter + 2);
+        }
+        return textPairs;
+    }
+
+    private static void encode(String[] letterPairs, String[][] cipherTable) {
+        String result = "";
+        for (String pair: letterPairs){
+            String char1 = "" + pair.charAt(0);
+            String char2 = "" + pair.charAt(1);
+
+            if((!checkRow(char1, char2, cipherTable)) && (!checkColumn(char1, char2, cipherTable))){
+                result += findRow(char1, cipherTable)[Arrays.asList(findRow(char2, cipherTable)).indexOf(char2)];
+                result += findRow(char2, cipherTable)[Arrays.asList(findRow(char1, cipherTable)).indexOf(char1)];
+            } else if(checkRow(char1, char2, cipherTable)){
+                result += findRow(char1, cipherTable)[calculateIndex(findRow(char1, cipherTable), char1)];
+                result += findRow(char2, cipherTable)[calculateIndex(findRow(char2, cipherTable), char2)];
+            } else if(checkColumn(char1, char2, cipherTable)){
+                result += findColumn(char1, cipherTable)[Arrays.asList(findRow(char1, cipherTable)).indexOf(char1)];
+                result += findColumn(char2, cipherTable)[Arrays.asList(findRow(char2, cipherTable)).indexOf(char2)];
+            }
+        }
+        System.out.println("Encoded text: " + result);
+    }
+
+    private static String[] findRow(String character, String[][] cipherTable) {
+        for(String[] row: cipherTable){
+            if(Arrays.asList(row).indexOf(character) != -1) {
+                return row;
+            }  
+        }
+        String[] empty = {""};
+        return empty;
+    }
+
+    private static String[] findColumn(String character, String[][] cipherTable) {
+        if((Arrays.asList(cipherTable).indexOf(findRow(character, cipherTable)) + 1) < cipherTable.length){
+            return cipherTable[Arrays.asList(cipherTable).indexOf(findRow(character, cipherTable)) + 1];
+        } else {
+            return cipherTable[0];
+        }
+    }
+
+
+
+    private static int calculateIndex(String[] row, String character) {
+        if(Arrays.asList(row).indexOf(character) + 1 < row.length){
+            return Arrays.asList(row).indexOf(character) + 1;
+        } else {
+            return 0;
+        }
+    }
+
+
+    private static boolean checkRow(String char1, String char2, String[][] cipherTable){
+        for(String[] row: cipherTable){
+            if((Arrays.asList(row).indexOf(char1) != -1) && (Arrays.asList(row).indexOf(char2) != -1)){
+                return true;
+            }  
+        }
+        return false;
+    }
+
+    private static boolean checkColumn(String char1, String char2, String[][] cipherTable){
+        int indexChar1 = 0;
+        int indexChar2 = 0;
+        for(String[] row: cipherTable){
+
+            if(Arrays.asList(row).indexOf(char1) != -1){
+                indexChar1 = Arrays.asList(row).indexOf(char1);
+            }
+            if(Arrays.asList(row).indexOf(char2) != -1){
+                indexChar2 = Arrays.asList(row).indexOf(char2);
+            } 
+        }
+
+        if(indexChar1 == indexChar2) {
+            return true;
+        } else{
+            return false;
         }
     }
 }
