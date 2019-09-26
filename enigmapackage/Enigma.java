@@ -75,6 +75,9 @@ public class Enigma {
             case "BACONIAN":
                 Baconian.BaconianCipher(text, mode);
                 break;
+            case "PLAYFAIR":
+                Playfair.playfairCipher(text, mode);
+                break;
             default:
                 System.out.println("Cipher not supported");
         }
