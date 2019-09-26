@@ -8,10 +8,8 @@ import java.util.Arrays;
 public class ADFGX {
     public static void adfgxCipher(String inputText, String mode, String key) {
         char[][] keySquare = {{'p', 'h', 'q', 'g', 'm'}, {'e', 'a', 'y', 'n', 'o'}, {'f', 'd', 'x', 'k', 'r'}, {'c', 'v', 's', 'z', 'w'}, {'b', 'u', 't', 'i', 'l'}};
-        String text = inputText.replaceAll(" ", "");
+        String text = inputText.replaceAll(" ", "").replaceAll("j","i");
         
-        
-        String result = "";
         HashMap<Integer, Character> hashMap = new HashMap<>();
         hashMap.put(0, 'A');
         hashMap.put(1, 'D');
@@ -24,186 +22,106 @@ public class ADFGX {
             listOfLists.add(new ArrayList<Character>());
         }
 
-        String sortedKey = sortString(key);
-
         if(mode.equals("-e")){
             // Encrypt
-            text = text.toLowerCase();
-            char[] sortedKeyArray = sortedKey.toCharArray();
-
-            HashMap<Character, Integer> keyMap = new HashMap<>();
-            for(char ch: key.toCharArray()) {
-                keyMap.put(ch, key.indexOf(ch));
-            }
-
-            for (int i = 0; i < text.length(); i++) {
-                result += getY(hashMap, keySquare, text.charAt(i));
-                result += getX(hashMap, keySquare, text.charAt(i));
-            }
-
-            for (int i = 0; i < result.length(); i++) {
-                int numberOflist = calculateListNumber(i, key.length());
-                listOfLists.get(numberOflist).add(result.charAt(i));
-            }
-
-            String finalResult = "";
-            for (int i = 0; i < listOfLists.size(); i++) {
-                finalResult += getStringRepresentation(listOfLists.get(keyMap.get(sortedKeyArray[i])));
-            }
-            System.out.println(finalResult);
+            System.out.println(encrypt(text, key, hashMap, keySquare, listOfLists));
         }
         else{
             // Decrypt
-            text = text.toUpperCase();
-            int numberOfRowsMin = (int)Math.floor((double)(text.length()) / (double)(key.length()));
-            int numberOfRowsMax = (int)Math.ceil((double)(text.length()) / (double)(key.length()));
-            int amountOfFullLists = (text.length()) % (key.length());
-            int amountOfSmallerLists = key.length() - amountOfFullLists;
-            System.out.println("Amount of smaller lits: " + amountOfSmallerLists);
-
-
-            
-            char[] keyAsArray = key.toCharArray();
-            HashMap<Character, Integer> sortedKeyMap = new HashMap<>();
-            for(char ch: sortedKey.toCharArray()) {
-                sortedKeyMap.put(ch, sortedKey.indexOf(ch));
-            }
-            HashMap<Character, Integer> columnLenghtMap = new HashMap<>();
-            for(char ch: key.toCharArray()) {
-                System.out.println("Index of character in key: " + key.indexOf(ch));
-                System.out.println("Index of last Max list: " + (key.length() - amountOfSmallerLists));
-                if(key.indexOf(ch) >= (key.length() - amountOfSmallerLists)) {
-                    System.out.println("Adding Min to dict");
-                    columnLenghtMap.put(ch, numberOfRowsMin);
-                } else {
-                    System.out.println("Adding Max to dict");
-                    columnLenghtMap.put(ch, numberOfRowsMax);
-                }
-            }
-            System.out.println(text);
-
-            int z = 0;
-            int characterNumber = 0;
-            for(List<Character> list: listOfLists) {
-                if (columnLenghtMap.get(sortedKey.charAt(z)) == numberOfRowsMin){
-                    System.out.println("Character in Key:" + sortedKey.charAt(z));
-                    System.out.println("This array is size:" + numberOfRowsMin);
-                    for (int j = 0; j < numberOfRowsMin; j++, characterNumber++) {
-                        list.add(text.charAt(characterNumber));
-                    }
-                } else {
-                    System.out.println("Character in Key:" + sortedKey.charAt(z));
-                    System.out.println("This array is size:" + numberOfRowsMax);
-                    for (int j = 0; j < numberOfRowsMax; j++, characterNumber++) {
-                        list.add(text.charAt(characterNumber));
-                    }
-                }
-                z++;
-            }
-            System.out.println(amountOfFullLists);
-            System.out.println(numberOfRowsMax);
-            System.out.println(numberOfRowsMin);
-            System.out.print("List: ");
-            System.out.println(listOfLists);
-            //int z = 0;
-
-
-            //System.out.println(numberOfRows);
-            // for (int i = 0, j = key.length(); i < text.length(); i += numberOfRows, j++) {
-            //     for (int k = 0; k < numberOfRows; k++, z++) {
-            //         try{
-            //         listOfLists.get(j-key.length()).add(text.charAt(z));
-            //         } catch(Exception e){
-            //             break;
-            //         }
-            //     }
-            // }
-
-
-
-            // int z = 0;
-            // int max = 0;
-            // for (int i = 0; i < key.length(); i++, amountOfFullLists--) {
-                
-            //     if(amountOfFullLists > 0){
-                    
-            //         max += numberOfRowsMax;
-                    
-                    
-            //         for (int k = z; k < max; k++, z = k) {
-            //             try {
-            //                 listOfLists.get(i).add(text.charAt(k));                    
-            //             } catch (Exception e){
-            //                 break;
-            //             }
-                        
-            //         }
-            //         //z += numberOfRowsMax;
-            //     } else {
-                    
-            //         max += numberOfRowsMin;
-                    
-                    
-            //         for (int k = z; k < max; k++, z = k) {
-            //             try {
-            //                 listOfLists.get(i).add(text.charAt(k));                    
-            //             } catch (Exception e){
-            //                 break;
-            //             }
-                                    
-            //             }
-            //            // z += numberOfRowsMin;
-            //     }
-            // }
-            // int indexOfCharactersLeft = numberOfRows*key.length();
-            // for (int i = 0, index = indexOfCharactersLeft; index < text.length(); i++, index++) {
-            //     listOfLists.get(i).add(text.charAt(index));
-            // }
-
-
-
-
-
-            //String encryptedText = "";
-            List<List<Character>> encryptedText = new ArrayList<List<Character>>();
-            for (int i = 0; i < listOfLists.size(); i++) {
-                System.out.println(sortedKeyMap.get(keyAsArray[i]));     
-                encryptedText.add(listOfLists.get(sortedKeyMap.get(keyAsArray[i])));
-            }
-            System.out.println(keyAsArray);        
-            System.out.println(encryptedText);
-
-            String tempText = "";
-            // for (int i = 0; i < encryptedText.get(i).size(); i++) {
-            //     for (int k = 0; k < key.length(); k++) {
-            //         try {
-            //             tempText += encryptedText.get(k).get(i);                   
-            //         } catch (Exception e){
-            //             continue;
-            //         }
-
-            //     }
-            // }
-            for (int characterToBeAdded = 0; characterToBeAdded < numberOfRowsMax; characterToBeAdded++) {
-                for(List<Character> listEncrypted: encryptedText){
-                    try{
-                        tempText += listEncrypted.get(characterToBeAdded);
-                    } catch (Exception e){
-                        continue;
-                    }
-                }
-            }
-            System.out.println(tempText);
-
-            for (int i = 0; i + 1 < tempText.length(); i += 2) {
-
-                int y = getKey(hashMap, tempText.charAt(i));
-                int x = getKey(hashMap, tempText.charAt(i+1));
-
-                result += keySquare[y][x];
-            }
-            System.out.println(result);
+            System.out.println(decrypt(text, key, hashMap, keySquare, listOfLists));            
         }
+    }
+
+
+    private static String encrypt(String text, String key, HashMap<Integer, Character> hashMap, char[][] keySquare, List<List<Character>> listOfLists) {
+        String sortedKey = sortString(key);        
+        char[] sortedKeyArray = sortedKey.toCharArray();        
+        String result = "";
+        HashMap<Character, Integer> keyMap = new HashMap<>();
+        for(char ch: key.toCharArray()) {
+            keyMap.put(ch, key.indexOf(ch));
+        }
+
+        for (int i = 0; i < text.length(); i++) {
+            result += getY(hashMap, keySquare, text.charAt(i));
+            result += getX(hashMap, keySquare, text.charAt(i));
+        }
+
+        for (int i = 0; i < result.length(); i++) {
+            int numberOflist = calculateListNumber(i, key.length());
+            listOfLists.get(numberOflist).add(result.charAt(i));
+        }
+
+        String finalResult = "";
+        for (int i = 0; i < listOfLists.size(); i++) {
+            finalResult += getStringRepresentation(listOfLists.get(keyMap.get(sortedKeyArray[i])));
+        }
+        return finalResult;
+    }
+
+
+    private static String decrypt(String text, String key, HashMap<Integer, Character> hashMap, char[][] keySquare, List<List<Character>> listOfLists) {
+        int numberOfRowsMin = (int)Math.floor((double)(text.length()) / (double)(key.length()));
+        int numberOfRowsMax = (int)Math.ceil((double)(text.length()) / (double)(key.length()));
+        int amountOfFullLists = (text.length()) % (key.length());
+        int amountOfSmallerLists = key.length() - amountOfFullLists;
+        String result = "";
+        
+        char[] keyAsArray = key.toCharArray();
+        String sortedKey = sortString(key);        
+        char[] sortedKeyArray = sortedKey.toCharArray();
+        HashMap<Character, Integer> sortedKeyMap = new HashMap<>();
+        for(char ch: sortedKey.toCharArray()) {
+            sortedKeyMap.put(ch, sortedKey.indexOf(ch));
+        }
+        HashMap<Character, Integer> columnLenghtMap = new HashMap<>();
+        for(char ch: key.toCharArray()) {
+            if(key.indexOf(ch) >= (key.length() - amountOfSmallerLists)) {
+                columnLenghtMap.put(ch, numberOfRowsMin);
+            } else {
+                columnLenghtMap.put(ch, numberOfRowsMax);
+            }
+        }
+
+        int columnIndex = 0;
+        int characterNumber = 0;
+        for(List<Character> list: listOfLists) {
+            if (columnLenghtMap.get(sortedKey.charAt(columnIndex)) == numberOfRowsMin){
+                for (int j = 0; j < numberOfRowsMin; j++, characterNumber++) {
+                    list.add(text.charAt(characterNumber));
+                }
+            } else {
+                for (int j = 0; j < numberOfRowsMax; j++, characterNumber++) {
+                    list.add(text.charAt(characterNumber));
+                }
+            }
+            columnIndex++;
+        }
+
+        List<List<Character>> encryptedText = new ArrayList<List<Character>>();
+        for (int i = 0; i < listOfLists.size(); i++) {
+            encryptedText.add(listOfLists.get(sortedKeyMap.get(keyAsArray[i])));
+        }
+
+        String tempText = "";
+        for (int characterToBeAdded = 0; characterToBeAdded < numberOfRowsMax; characterToBeAdded++) {
+            for(List<Character> listEncrypted: encryptedText){
+                try{
+                    tempText += listEncrypted.get(characterToBeAdded);
+                } catch (Exception e){
+                    continue;
+                }
+            }
+        }
+
+        for (int i = 0; i + 1 < tempText.length(); i += 2) {
+
+            int y = getKey(hashMap, tempText.charAt(i));
+            int x = getKey(hashMap, tempText.charAt(i+1));
+
+            result += keySquare[y][x];
+        }
+        return result;
     }
 
     public static String getStringRepresentation(List<Character> list) {
