@@ -8,7 +8,7 @@ import java.util.Arrays;
 public class ADFGX {
     public static void adfgxCipher(String inputText, String mode, String key) {
         char[][] keySquare = {{'p', 'h', 'q', 'g', 'm'}, {'e', 'a', 'y', 'n', 'o'}, {'f', 'd', 'x', 'k', 'r'}, {'c', 'v', 's', 'z', 'w'}, {'b', 'u', 't', 'i', 'l'}};
-        String text = inputText.replaceAll(" ", "");
+        String text = inputText.replaceAll(" ", "").toLowerCase();
         
         String result = "";
         HashMap<Integer, Character> hashMap = new HashMap<>();
@@ -79,23 +79,23 @@ public class ADFGX {
             }
             System.out.println(text);
 
-            int z = 0;
+            int columnIndex = 0;
             int characterNumber = 0;
             for(List<Character> list: listOfLists) {
-                if (columnLenghtMap.get(sortedKey.charAt(z)) == numberOfRowsMin){
-                    System.out.println("Character in Key:" + sortedKey.charAt(z));
+                if (columnLenghtMap.get(sortedKey.charAt(columnIndex)) == numberOfRowsMin){
+                    System.out.println("Character in Key:" + sortedKey.charAt(columnIndex));
                     System.out.println("This array is size:" + numberOfRowsMin);
                     for (int j = 0; j < numberOfRowsMin; j++, characterNumber++) {
                         list.add(text.charAt(characterNumber));
                     }
                 } else {
-                    System.out.println("Character in Key:" + sortedKey.charAt(z));
+                    System.out.println("Character in Key:" + sortedKey.charAt(columnIndex));
                     System.out.println("This array is size:" + numberOfRowsMax);
                     for (int j = 0; j < numberOfRowsMax; j++, characterNumber++) {
                         list.add(text.charAt(characterNumber));
                     }
                 }
-                z++;
+                columnIndex++;
             }
             System.out.println(amountOfFullLists);
             System.out.println(numberOfRowsMax);
