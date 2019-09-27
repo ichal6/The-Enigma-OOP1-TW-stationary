@@ -7,7 +7,11 @@ public class SimpleSubstrationCipher {
 
     public static void simpleSubstitutionCipher(String text, String mode, String key)
     {
-        //key = "DXSFZEHCVITPGAQLKJRUOWMYBN";
+        if (key.equals(""))
+        {
+            key = "DXSFZEHCVITPGAQLKJRUOWMYBN";
+        }
+        key = key.toUpperCase();
         text = text.toUpperCase();
         char[] textAsChar = text.toCharArray();
 

@@ -1,7 +1,4 @@
 package enigmapackage;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Arrays;
 import java.util.Scanner;
 
 import enigmapackage.ADFGX;
