@@ -54,7 +54,7 @@ public class Enigma {
     }
 
     private static void listAvailableCiphers() {
-        String[] ciphers = {"ATBASH", "ROT13", "CAESAR - digit key", "HOMOPHONIC", "VIGENERE - word key", "SIMPLESUBSTRATION - word key", "BACONIAN", "ADFGX - word key"};
+        String[] ciphers = {"ATBASH", "ROT13", "CAESAR - digit key", "HOMOPHONIC", "VIGENERE - word key", "SIMPLESUBSTRATION - word key", "BACONIAN", "ADFGX - word key", "PLAYFAIR"};
         System.out.println("List of supported ciphers:");
         for(String cipher: ciphers) {
             System.out.println(cipher);
