@@ -5,6 +5,7 @@ import java.util.Arrays;
 public class Vigenere {
 
     public static void vigenere(String inputText, String mode, String key) {
+        key = key.toLowerCase();
         char[][] matrix = new char[26][26];
         String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".toLowerCase();
         String text = inputText.replace(" ", "").toLowerCase();
