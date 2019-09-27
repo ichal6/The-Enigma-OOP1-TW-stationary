@@ -8,6 +8,7 @@ public class SimpleSubstrationCipher {
     public static void simpleSubstitutionCipher(String text, String mode, String key)
     {
         //key = "DXSFZEHCVITPGAQLKJRUOWMYBN";
+        key = key.toUpperCase();
         text = text.toUpperCase();
         char[] textAsChar = text.toCharArray();
 
