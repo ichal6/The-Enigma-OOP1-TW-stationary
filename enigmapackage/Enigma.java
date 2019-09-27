@@ -10,7 +10,7 @@ import enigmapackage.ADFGX;
 public class Enigma {
     public static void main(String[] args) {
         System.out.println("The Enigma");
-        String mode = "-e";
+        String mode = "-h";
 
         try{
             mode = args[0];
@@ -23,6 +23,8 @@ public class Enigma {
         String cipher = "HOMOPHONIC";
         String key = "";
 
+
+    
         if (args.length > 1)
         {
             cipher = args[1]; 
@@ -33,6 +35,9 @@ public class Enigma {
         }
 
         switch(mode){
+            case "-h":
+            System.out.println("'-e' to encrypt\n'-d' to decrypt\n'-l' to view list of available ciphers'");
+            System.exit(0);
             case "-e":
             case "-d":
                 loadCipher(mode, cipher, key);
