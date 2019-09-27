@@ -3,10 +3,11 @@ package enigmapackage;
 import java.util.Arrays;
 
 public class Playfair {
-    public static void playfairCipher(String text, String mode) {
+    public static void playfairCipher(String text, String mode, String key) {
         String abc = "ABCDEFGHIKLMNOPQRSTUVWXYZ";
         String outPutText = "";
-        String cipherKey = "MONARCHY"; // key may be default or not
+        String cipherKey = key.toUpperCase(); // key may be default or not
+        System.out.println(cipherKey);
         text = text.replaceAll("j","i").toUpperCase();
         int abcLength = abc.length();
         String charsToRemove = "., !:;?";

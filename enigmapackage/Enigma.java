@@ -87,7 +87,7 @@ public class Enigma {
                 Baconian.BaconianCipher(text, mode);
                 break;
             case "PLAYFAIR":
-                Playfair.playfairCipher(text, mode);
+                Playfair.playfairCipher(text, mode, key);
                 break;
             case "ADFGX":
                 ADFGX.adfgxCipher(text, mode, key);
