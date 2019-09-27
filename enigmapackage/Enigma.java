@@ -1,6 +1,11 @@
 package enigmapackage;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
 import java.util.Scanner;
+
+import enigmapackage.ADFGX;
+
 
 public class Enigma {
     public static void main(String[] args) {
@@ -22,7 +27,7 @@ public class Enigma {
         {
             cipher = args[1]; 
         }
-        else if(args.length > 2) 
+        if(args.length > 2) 
         {
             key = args[2];
         }
@@ -49,8 +54,11 @@ public class Enigma {
     }
 
     private static void listAvailableCiphers() {
-        System.out.println("List of ciphers");
-        System.out.println("List of ciphers");
+        String[] ciphers = {"ATBASH", "ROT13", "CAESAR - digit key", "HOMOPHONIC", "VIGENERE - word key", "SIMPLESUBSTRATION - word key", "BACONIAN", "ADFGX - word key"};
+        System.out.println("List of supported ciphers:");
+        for(String cipher: ciphers) {
+            System.out.println(cipher);
+        }
     }
 
     private static void loadCipher(String mode, String cipher, String key) {
@@ -69,6 +77,9 @@ public class Enigma {
             case "HOMOPHONIC":
                 HomophonicCipher.homophonicCipher(text, mode);
                 break;
+            case "VIGENERE":
+                Vigenere.vigenere(text, mode, key);
+                break;
             case "SIMPLESUBSTRATION":
                 SimpleSubstrationCipher.simpleSubstitutionCipher(text, mode, key);
                 break;
@@ -77,6 +88,9 @@ public class Enigma {
                 break;
             case "PLAYFAIR":
                 Playfair.playfairCipher(text, mode);
+                break;
+            case "ADFGX":
+                ADFGX.adfgxCipher(text, mode, key);
                 break;
             default:
                 System.out.println("Cipher not supported");
@@ -88,5 +102,4 @@ public class Enigma {
         String text = scanner.nextLine();
         return text;
     }
-
 }
