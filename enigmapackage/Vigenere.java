@@ -1,7 +1,5 @@
 package enigmapackage;
 
-import java.util.Arrays;
-
 public class Vigenere {
 
     public static void vigenere(String inputText, String mode, String key) {
