@@ -1,6 +1,5 @@
 package enigmapackage;
 
-import java.awt.Robot;
 import java.util.Arrays;
 
 public class Playfair {
